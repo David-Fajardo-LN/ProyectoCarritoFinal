@@ -8,6 +8,7 @@ import DaoClases.ProductoDaoMemoria;
 import Logica.Producto;
 import Logica.ItemCarrito;
 import Logica.ProductoBaseDatos;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -197,5 +198,9 @@ public class ProductoControlador {
             return null;
         }
         return productoDaoMemoria.retornarProductoPorNombre(nombre);
+    }
+    
+    public ArrayList<Producto> retornarProductos(){
+        return productoDaoMemoria.retornarProductos();
     }
 }

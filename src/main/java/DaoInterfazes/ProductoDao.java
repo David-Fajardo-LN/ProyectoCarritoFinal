@@ -5,6 +5,7 @@
 package DaoInterfazes;
 
 import Logica.Producto;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,4 +21,6 @@ public interface ProductoDao {
     void agregarProducto(String codigo, String nombre, double precio);
     void eliminarProductoPorCodigo(String codigo);
     void modificarProductoBase(Producto p, String nuevoCodigo, String nuevoNombre, double nuevoPrecio);
+    
+    ArrayList<Producto> retornarProductos();
 }

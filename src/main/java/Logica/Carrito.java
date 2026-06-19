@@ -16,13 +16,21 @@ public class Carrito {
     private String codigo;
     private ArrayList<ItemCarrito> items;
 
-    public Carrito() {
+    public Carrito(String codigo) {
+        this.codigo=codigo;
         this.items = new ArrayList<>();
+    }
+    
+    public Carrito(String codigo, ArrayList<ItemCarrito> items){
+        this.codigo=codigo;
+        this.items = items;
     }
 
 
     public ArrayList<ItemCarrito> getItems() {return items;}
-    public void setItem(ItemCarrito item) {this.items.add(item);}
+    public void agregarItem(ItemCarrito item) {this.items.add(item);}
+    public String getCodigo() {return codigo;}
+    public void setCodigo(String codigo) {this.codigo = codigo;}
     
     
 

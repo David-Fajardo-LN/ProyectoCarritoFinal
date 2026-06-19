@@ -7,6 +7,7 @@ package DaoClases;
 import DaoInterfazes.ProductoDao;
 import Logica.Producto;
 import Logica.ProductoBaseDatos;
+import java.util.ArrayList;
 
 /**
  *
@@ -68,5 +69,12 @@ public class ProductoDaoMemoria implements ProductoDao{
     public Producto retornarProductoPorNombre(String nombre) {
         Producto p = productos.retornarProductoPorNombre(nombre);
         return p;
-    }  
+    } 
+
+    @Override
+    public ArrayList<Producto> retornarProductos() {
+        return productos.getProductos();
+    }
+    
+    
 }

@@ -301,7 +301,7 @@ public class VPrincipalView extends javax.swing.JFrame {
 
     private void listarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarProductosActionPerformed
         
-        VListarProductosView listarProductos = new VListarProductosView();
+        VListarProductosView listarProductos = new VListarProductosView(controlador);
         listarProductos.setVentanaPrincipal(this);
         listarProductos.setVisible(true);
         listarProductos.setLocationRelativeTo(null);

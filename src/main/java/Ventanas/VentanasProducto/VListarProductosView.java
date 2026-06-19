@@ -4,8 +4,12 @@
  */
 package Ventanas.VentanasProducto;
 
+import Controladores.ProductoControlador;
+import Logica.Producto;
 import Ventanas.VPrincipalView;
 import Ventanas.VentanasCarrito.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,12 +19,14 @@ public class VListarProductosView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VListarProductosView.class.getName());
 
+    private ProductoControlador controlador;
     private VPrincipalView principal;
     
     /**
      * Creates new form VBuscarCarritoView
      */
-    public VListarProductosView() {
+    public VListarProductosView(ProductoControlador controlador) {
+        this.controlador=controlador;
         initComponents();
     }
     
@@ -31,6 +37,18 @@ public class VListarProductosView extends javax.swing.JFrame {
     private void regresarVentanaPrincipal() {
         principal.setVisible(true);
         this.dispose();
+    }
+    
+    private void mostrarProductos(ArrayList<Producto> productos){
+        DefaultTableModel modelo =  (DefaultTableModel) TablaProductos.getModel();
+        modelo.setRowCount(0);
+        for(Producto p : productos){
+            modelo.addRow(new Object[]{
+                p.getCodigo(),
+                p.getNombre(),
+                p.getPrecio()
+            });
+        }
     }
 
     /**
@@ -47,7 +65,7 @@ public class VListarProductosView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaProductos = new javax.swing.JTable();
         btnRegresarMenu = new javax.swing.JButton();
         btnListarProductos = new javax.swing.JButton();
 
@@ -78,23 +96,24 @@ public class VListarProductosView extends javax.swing.JFrame {
 
         jLabel3.setText("LISTADO DE PRODUCTOS");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Codigo", "Nombre", "Precio", "Cantidad"
+                "Codigo", "Nombre", "Precio"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaProductos);
 
         btnRegresarMenu.setText("REGRESAR AL MENU");
         btnRegresarMenu.addActionListener(this::btnRegresarMenuActionPerformed);
 
         btnListarProductos.setText("LISTAR PRODUCTOS");
+        btnListarProductos.addActionListener(this::btnListarProductosActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,17 +121,13 @@ public class VListarProductosView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE)))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(121, 121, 121)
@@ -145,12 +160,20 @@ public class VListarProductosView extends javax.swing.JFrame {
         regresarVentanaPrincipal();
     }//GEN-LAST:event_btnRegresarMenuActionPerformed
 
+    private void btnListarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarProductosActionPerformed
+   
+        ArrayList<Producto> productos = controlador.retornarProductos();
+        mostrarProductos(productos);
+        
+    }//GEN-LAST:event_btnListarProductosActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaProductos;
     private javax.swing.JButton btnListarProductos;
     private javax.swing.JButton btnRegresarMenu;
     private javax.swing.JLabel jLabel1;
@@ -158,6 +181,5 @@ public class VListarProductosView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
