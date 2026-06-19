@@ -4,6 +4,7 @@
  */
 package Controladores;
 
+import DaoClases.ProductoDaoMemoria;
 import Logica.Producto;
 import Logica.ItemCarrito;
 import Logica.ProductoBaseDatos;
@@ -14,60 +15,11 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class ProductoControlador {
-    //SOLICITAMOS LA BASE DE DATOS COMO PARAMETRO DE FUNCIONAMIENTO AL CONTROLADOR 
     
-    private ProductoBaseDatos productos;
-    
-    public ProductoControlador(ProductoBaseDatos base){
-        this.productos=base;
-    }
-    
-    //METODOS PURAMENTE DE VALIDACIÓN DE INFORMACIÓN
-    
-    private boolean existeProductoPorCodigo(String codigo){
-        for(Producto p : productos.getProductos()){
-            if(p.getCodigo().equals(codigo))
-                return true;
-        }
-        return false;
-    }
-    
-    private boolean existeProductoPorNombre(String nombre){
-        for(Producto p: productos.getProductos()){
-            if(p.getNombre().equals(nombre))
-                return true;
-        }
-        return false;
-    }
-    
-    
-    //METODOS ME MODIFICACIÓN DE DATOS -AGREGAR-ELIMINAR-MODIFICAR
-    
-    private void agregarProducto(String codigo, String nombre, double precio){
-        productos.agregarProducto(new Producto(codigo, nombre, precio));
-    }
-    
-    private void eliminarProductoPorCodigo(String codigo){
-        productos.eliminarProductoDeLaBase(codigo);
-    }
-    
-    private Producto retornarProductoPorCodigo(String codigo){
-        Producto p = productos.retornarProductoPorCodigo(codigo);
-        return p;
-    }
-    
-    private Producto retornarProductoPorNombre(String nombre){
-        Producto p = productos.retornarProductoPorNombre(nombre);
-        return p;
-    }
-    
-    private void modificarProductoBase(Producto p, String nuevoCodigo, String nuevoNombre, double nuevoPrecio){
-        if(!p.getCodigo().equals(nuevoCodigo))
-            p.setCodigo(nuevoCodigo);
-        if(!p.getNombre().equals(nuevoNombre))
-            p.setNombre(nuevoNombre);
-        if(p.getPrecio() != nuevoPrecio)
-            p.setPrecio(nuevoPrecio);
+    private ProductoDaoMemoria productoDaoMemoria;
+
+    public ProductoControlador(ProductoDaoMemoria productoDaoMemoria) {
+        this.productoDaoMemoria = productoDaoMemoria;
     }
     
     private boolean validarEntradaBase(String nombre, String codigo, String precioString){
@@ -124,14 +76,14 @@ public class ProductoControlador {
         
         // REVISAMOS SI EL CODIGO INGRESADO EXISTE, YA QUE NO PUEDEN HABER DOS PRODUCTOS OCN UN MISMO CODIGO
         
-        if(existeProductoPorCodigo(codigo)){
+        if(productoDaoMemoria.existeProductoPorCodigo(codigo)){
             JOptionPane.showMessageDialog(null, "Error: El codigo de producto ya existe");
             return false;
         }
         
         // SI TODAS LAS REVISIONES ESTAN CORRECTAS, ENTOCNES SE AGREGA EL PRODUCTO
         
-        agregarProducto(codigo, nombre, precio);
+        productoDaoMemoria.agregarProducto(codigo, nombre, precio);
         JOptionPane.showMessageDialog(null, "Producto agregado con exito");
         return true;
     }
@@ -155,11 +107,11 @@ public class ProductoControlador {
             JOptionPane.showMessageDialog(null, "Error: ingrese el codigo del producto a eliminar");
             return false;
         }
-        if(!existeProductoPorCodigo(codigoEliminar)){
+        if(!productoDaoMemoria.existeProductoPorCodigo(codigoEliminar)){
             JOptionPane.showMessageDialog(null, "Error: El codigo de producto a eliminar no existe");
             return false;
         }
-        eliminarProductoPorCodigo(codigoEliminar);
+        productoDaoMemoria.eliminarProductoPorCodigo(codigoEliminar);
         JOptionPane.showMessageDialog(null,"Producto eliminado con exito");
         return true;
     }
@@ -208,20 +160,20 @@ public class ProductoControlador {
         
         
         
-        Producto buscado = retornarProductoPorCodigo(codigoAModificar);
+        Producto buscado = productoDaoMemoria.retornarProductoPorCodigo(codigoAModificar);
         
         if(buscado ==null){
             JOptionPane.showMessageDialog(null, "Error: Codigo de producto no existe");
             return false;
         }
         
-        Producto productoConEseCodigo = retornarProductoPorCodigo(nuevoCodigo);
+        Producto productoConEseCodigo = productoDaoMemoria.retornarProductoPorCodigo(nuevoCodigo);
 
         if(productoConEseCodigo != null && productoConEseCodigo != buscado){
             JOptionPane.showMessageDialog(null,"Error: El nuevo codigo ya existe");
             return false;
         }
-        modificarProductoBase(buscado, nuevoCodigo, nuevoNombre, nuevoPrecio);
+        productoDaoMemoria.modificarProductoBase(buscado, nuevoCodigo, nuevoNombre, nuevoPrecio);
         JOptionPane.showMessageDialog(null,"Producto modificado con éxito");
         return true; 
     }
@@ -235,7 +187,7 @@ public class ProductoControlador {
             JOptionPane.showMessageDialog(null, "Error: el campo de codigo esta vacio");
             return null;
         }
-        return productos.retornarProductoPorCodigo(codigo);
+        return productoDaoMemoria.retornarProductoPorCodigo(codigo);
     }
     
     public Producto buscarProductoPorNombre(String nombre){
@@ -244,6 +196,6 @@ public class ProductoControlador {
             JOptionPane.showMessageDialog(null, "Error: el campo de nombre esta vacio");
             return null;
         }
-        return productos.retornarProductoPorNombre(nombre);
+        return productoDaoMemoria.retornarProductoPorNombre(nombre);
     }
 }

@@ -5,6 +5,7 @@
 package menu;
 
 import Controladores.ProductoControlador;
+import DaoClases.ProductoDaoMemoria;
 import Logica.ProductoBaseDatos;
 import Ventanas.VPrincipalView;
 
@@ -38,8 +39,11 @@ public class Menu {
     */
         
         ProductoBaseDatos baseDatosProducto = new ProductoBaseDatos();
-        ProductoControlador controladorProducto = new ProductoControlador(baseDatosProducto);
+        ProductoDaoMemoria productoDaoMemoria = new ProductoDaoMemoria(baseDatosProducto);
+        ProductoControlador controladorProducto = new ProductoControlador(productoDaoMemoria);
+        
         VPrincipalView principalView = new VPrincipalView(controladorProducto);
+        principalView.setLocationRelativeTo(null);
         principalView.setVisible(true);
         
     }

@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public class Carrito {
     //CONTIENE UNA LISTA DE ITEMS PARA SIMULAR UN CARRITO FISICO
-    
+    private String codigo;
     private ArrayList<ItemCarrito> items;
 
     public Carrito() {

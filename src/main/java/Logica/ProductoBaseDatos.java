@@ -79,7 +79,7 @@ public class ProductoBaseDatos {
         productos.add(new Producto("1", "Arroz Super Extra 5kg", 6.50));
         productos.add(new Producto("ALI-002", "Aceite Girasol 1L", 3.25));
         productos.add(new Producto("ALI-003", "Leche Entera 1L", 1.10));
-        productos.add(new Producto("ALI-004", "Atún en aceite", 1.85));
+        productos.add(new Producto("2", "Atún en aceite", 1.85));
         productos.add(new Producto("ALI-005", "Azúcar Blanca 1kg", 1.20));
         productos.add(new Producto("ALI-006", "Café Soluble 200g", 5.90));
         
@@ -89,7 +89,7 @@ public class ProductoBaseDatos {
         productos.add(new Producto("TEC-004", "Cable HDMI 2m", 8.00));
         productos.add(new Producto("TEC-005", "Teclado USB", 18.00));
         
-        productos.add(new Producto("HOG-001", "Detergente Líquido 2L", 7.50));
+        productos.add(new Producto("3", "Detergente Líquido 2L", 7.50));
         productos.add(new Producto("HOG-002", "Papel Higiénico 12u", 5.50));
         productos.add(new Producto("HOG-003", "Jabón de Mano", 1.50));
         productos.add(new Producto("HOG-004", "Esponja de cocina", 0.75));

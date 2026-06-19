@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Ventanas;
+package Ventanas.VentanasProducto;
 
 import Controladores.ProductoControlador;
 import javax.swing.JOptionPane;
@@ -28,7 +28,7 @@ public class VAgregarProductoView extends javax.swing.JFrame {
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     
-    public void setVP(VPrincipalView v1){
+    public void setVentanaPrincipal(VPrincipalView v1){
         this.principal=v1;
     }
     

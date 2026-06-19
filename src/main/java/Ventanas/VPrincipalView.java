@@ -5,13 +5,16 @@
 package Ventanas;
 
 import Controladores.ProductoControlador;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import Ventanas.VAgregarProductoView;
-import Ventanas.VBuscarProductoView;
-import Ventanas.VEliminarProductoView;
-import Ventanas.VModificarProductoView;
+import Ventanas.VentanasCarrito.VBuscarCarritoView;
+import Ventanas.VentanasCarrito.VEliminarCarritoView;
+import Ventanas.VentanasCarrito.VModificarCarritoView;
+import Ventanas.VentanasCarrito.VNuevoCarritoView;
+import Ventanas.VentanasProducto.VAgregarProductoView;
+import Ventanas.VentanasProducto.VBuscarProductoView;
+import Ventanas.VentanasProducto.VEliminarProductoView;
+import Ventanas.VentanasProducto.VListarProductosView;
+import Ventanas.VentanasProducto.VModificarProductoView;
+
 
 /**
  *
@@ -28,8 +31,8 @@ public class VPrincipalView extends javax.swing.JFrame {
         initComponents();
         
     }
+   
     
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,6 +58,7 @@ public class VPrincipalView extends javax.swing.JFrame {
         opcionBuscarProducto = new javax.swing.JMenuItem();
         opcionModificarProducto = new javax.swing.JMenuItem();
         opcionEliminarProducto = new javax.swing.JMenuItem();
+        listarProductos = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         opcionNuevoCarrito = new javax.swing.JMenuItem();
         OopcionBuscarCarrito = new javax.swing.JMenuItem();
@@ -195,6 +199,10 @@ public class VPrincipalView extends javax.swing.JFrame {
         opcionEliminarProducto.addActionListener(this::opcionEliminarProductoActionPerformed);
         opcionCrearProducto.add(opcionEliminarProducto);
 
+        listarProductos.setText("Listar Productos");
+        listarProductos.addActionListener(this::listarProductosActionPerformed);
+        opcionCrearProducto.add(listarProductos);
+
         menuBar.add(opcionCrearProducto);
 
         editMenu.setMnemonic('e');
@@ -202,18 +210,22 @@ public class VPrincipalView extends javax.swing.JFrame {
 
         opcionNuevoCarrito.setMnemonic('t');
         opcionNuevoCarrito.setText("Nuevo Carrito");
+        opcionNuevoCarrito.addActionListener(this::opcionNuevoCarritoActionPerformed);
         editMenu.add(opcionNuevoCarrito);
 
         OopcionBuscarCarrito.setMnemonic('y');
         OopcionBuscarCarrito.setText("Buscar Carrito");
+        OopcionBuscarCarrito.addActionListener(this::OopcionBuscarCarritoActionPerformed);
         editMenu.add(OopcionBuscarCarrito);
 
         opcionModificarInformacionCarrito.setMnemonic('p');
         opcionModificarInformacionCarrito.setText("Modificar Informacion");
+        opcionModificarInformacionCarrito.addActionListener(this::opcionModificarInformacionCarritoActionPerformed);
         editMenu.add(opcionModificarInformacionCarrito);
 
         opcionEliminarCarrito.setMnemonic('d');
         opcionEliminarCarrito.setText("Eliminar Carrito");
+        opcionEliminarCarrito.addActionListener(this::opcionEliminarCarritoActionPerformed);
         editMenu.add(opcionEliminarCarrito);
 
         menuBar.add(editMenu);
@@ -249,7 +261,7 @@ public class VPrincipalView extends javax.swing.JFrame {
 
     private void opcionEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEliminarProductoActionPerformed
         VEliminarProductoView eliminarProducto = new VEliminarProductoView(controlador);
-        eliminarProducto.setVP(this);
+        eliminarProducto.setVentanaPrincipal(this);
         eliminarProducto.setVisible(true);
         eliminarProducto.setLocationRelativeTo(null);
         
@@ -258,7 +270,7 @@ public class VPrincipalView extends javax.swing.JFrame {
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         VAgregarProductoView agregarProducto = new VAgregarProductoView(controlador);
-        agregarProducto.setVP(this);
+        agregarProducto.setVentanaPrincipal(this);
         agregarProducto.setVisible(true);
         agregarProducto.setLocationRelativeTo(null);
         
@@ -267,7 +279,7 @@ public class VPrincipalView extends javax.swing.JFrame {
 
     private void opcionBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionBuscarProductoActionPerformed
         VBuscarProductoView buscarProducto = new VBuscarProductoView(controlador);
-        buscarProducto.setVP(this);
+        buscarProducto.setVentanaPrincipal(this);
         buscarProducto.setVisible(true);
         buscarProducto.setLocationRelativeTo(null);
         
@@ -276,7 +288,7 @@ public class VPrincipalView extends javax.swing.JFrame {
 
     private void opcionModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModificarProductoActionPerformed
         VModificarProductoView agregarProducto = new VModificarProductoView(controlador);
-        agregarProducto.setVP(this);
+        agregarProducto.setVentanaPrincipal(this);
         agregarProducto.setVisible(true);
         agregarProducto.setLocationRelativeTo(null);
         
@@ -286,6 +298,53 @@ public class VPrincipalView extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void listarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarProductosActionPerformed
+        
+        VListarProductosView listarProductos = new VListarProductosView();
+        listarProductos.setVentanaPrincipal(this);
+        listarProductos.setVisible(true);
+        listarProductos.setLocationRelativeTo(null);
+        
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_listarProductosActionPerformed
+
+    private void opcionNuevoCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionNuevoCarritoActionPerformed
+        VNuevoCarritoView nuevoCarrito = new VNuevoCarritoView();
+        nuevoCarrito.setVentanaPrincipal(this);
+        nuevoCarrito.setVisible(true);
+        nuevoCarrito.setLocationRelativeTo(null);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_opcionNuevoCarritoActionPerformed
+
+    private void OopcionBuscarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OopcionBuscarCarritoActionPerformed
+        VBuscarCarritoView buscarCarrito = new VBuscarCarritoView();
+        buscarCarrito.setVentanaPrincipal(this);
+        buscarCarrito.setVisible(true);
+        buscarCarrito.setLocationRelativeTo(null);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_OopcionBuscarCarritoActionPerformed
+
+    private void opcionModificarInformacionCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModificarInformacionCarritoActionPerformed
+        VModificarCarritoView modificarCarrito = new VModificarCarritoView();
+        modificarCarrito.setVentanaPrincipal(this);
+        modificarCarrito.setVisible(true);
+        modificarCarrito.setLocationRelativeTo(null);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_opcionModificarInformacionCarritoActionPerformed
+
+    private void opcionEliminarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEliminarCarritoActionPerformed
+        VEliminarCarritoView eliminarCarrito = new VEliminarCarritoView();
+        eliminarCarrito.setVentanaPrincipal(this);
+        eliminarCarrito.setVisible(true);
+        eliminarCarrito.setLocationRelativeTo(null);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_opcionEliminarCarritoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,6 +368,7 @@ public class VPrincipalView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JMenuItem listarProductos;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem opcionBuscarProducto;
     private javax.swing.JMenu opcionCrearProducto;
