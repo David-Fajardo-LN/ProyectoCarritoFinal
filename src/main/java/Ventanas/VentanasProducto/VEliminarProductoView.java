@@ -17,6 +17,7 @@ public class VEliminarProductoView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VEliminarProductoView.class.getName());
 
+    private Producto encontrado = null;
     private ProductoControlador controlador;
     private VPrincipalView principal;
     /**
@@ -34,6 +35,7 @@ public class VEliminarProductoView extends javax.swing.JFrame {
     
     private void regresarVentanaPrincipal() {
         principal.setVisible(true);
+        principal.setLocationRelativeTo(null);
         this.dispose();
     }
 
@@ -156,7 +158,7 @@ public class VEliminarProductoView extends javax.swing.JFrame {
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(lbPrecioProducto))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(lbCodigoPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -190,7 +192,7 @@ public class VEliminarProductoView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbPrecioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE))
-                .addGap(47, 47, 47)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                     .addComponent(lbCodigoPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -198,7 +200,7 @@ public class VEliminarProductoView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(26, 26, 26))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -234,7 +236,8 @@ public class VEliminarProductoView extends javax.swing.JFrame {
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         String codigoBuscar = lbBuscarCodigoEliminar.getText();
         
-        Producto p = controlador.buscarProductoPorCodigo(codigoBuscar);
+        Producto p = controlador.retornarProductoPorCodigo(codigoBuscar);
+        this.encontrado=p;
         
         if(p == null){
             JOptionPane.showMessageDialog(null,"Error: Producto no encontrado");
@@ -250,13 +253,24 @@ public class VEliminarProductoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
         String codigoPermiso = lbCodigoPermiso.getText();
-        String codigoEliminar = lbBuscarCodigoEliminar.getText();
         
-        boolean procesoExitoso = controlador.eliminarProducto(codigoEliminar, codigoPermiso);
+        if(encontrado == null){
+            JOptionPane.showMessageDialog(null, "Error: busque un producto valido primero");
+            return;
+        }
         
+        boolean procesoExitoso = controlador.eliminarProductoPorObjeto(encontrado, codigoPermiso);
         if(procesoExitoso){
-            regresarVentanaPrincipal();
+            JOptionPane.showMessageDialog(null, "Producto eliminado con exito");
+            this.encontrado=null;
+            
+            lbBuscarCodigoEliminar.setText("");
+            lbCodigoPermiso.setText("");
+            lbCodigoProducto.setText("");
+            lbNombreProducto.setText("");
+            lbPrecioProducto.setText("");  
         }
         
     }//GEN-LAST:event_btnEliminarActionPerformed

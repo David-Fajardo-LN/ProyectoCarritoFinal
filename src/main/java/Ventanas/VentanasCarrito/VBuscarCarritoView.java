@@ -4,7 +4,12 @@
  */
 package Ventanas.VentanasCarrito;
 
+import Controladores.CarritoControlador;
+import Logica.Carrito;
+import Logica.ItemCarrito;
 import Ventanas.VPrincipalView;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,12 +19,14 @@ public class VBuscarCarritoView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VBuscarCarritoView.class.getName());
 
+    private CarritoControlador controlador;
     private VPrincipalView principal;
     
     /**
      * Creates new form VBuscarCarritoView
      */
-    public VBuscarCarritoView() {
+    public VBuscarCarritoView(CarritoControlador c) {
+        this.controlador = c;
         initComponents();
     }
     
@@ -30,7 +37,21 @@ public class VBuscarCarritoView extends javax.swing.JFrame {
     
     private void regresarVentanaPrincipal() {
         principal.setVisible(true);
+        principal.setLocationRelativeTo(null);
         this.dispose();
+    }
+    private void mostrarProductos(Carrito c){  
+        ArrayList<ItemCarrito> items = c.getItems();
+        DefaultTableModel modelo =  (DefaultTableModel) TablaDatosMostrar.getModel();
+        modelo.setRowCount(0);  
+        for(ItemCarrito i : items){
+            modelo.addRow(new Object[]{
+                i.getProducto().getCodigo(),
+                i.getProducto().getNombre(),
+                i.getProducto().getPrecio(),
+                i.getCantidad()
+            });
+        }
     }
 
     /**
@@ -50,7 +71,7 @@ public class VBuscarCarritoView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaDatosMostrar = new javax.swing.JTable();
         btnRegresarMenu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,12 +102,13 @@ public class VBuscarCarritoView extends javax.swing.JFrame {
         txtCodigoProductoBuscar.setBackground(new java.awt.Color(255, 255, 153));
 
         btBuscarProducto.setText("BUSCAR");
+        btBuscarProducto.addActionListener(this::btBuscarProductoActionPerformed);
 
         jLabel2.setText("CODIGO DE CARRITO A BUSCAR:");
 
         jLabel3.setText("LISTA DE PRODUCTOS DEL CARRITO ENCONTRADO:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaDatosMostrar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -97,7 +119,7 @@ public class VBuscarCarritoView extends javax.swing.JFrame {
                 "Codigo", "Nombre", "Precio", "Cantidad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaDatosMostrar);
 
         btnRegresarMenu.setText("REGRESAR AL MENU");
         btnRegresarMenu.addActionListener(this::btnRegresarMenuActionPerformed);
@@ -154,12 +176,23 @@ public class VBuscarCarritoView extends javax.swing.JFrame {
         regresarVentanaPrincipal();
     }//GEN-LAST:event_btnRegresarMenuActionPerformed
 
+    private void btBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarProductoActionPerformed
+        String codigo = txtCodigoProductoBuscar.getText();
+        Carrito c = controlador.retornarCarritoPorCodigo(codigo);
+        if(c != null)
+            mostrarProductos(c);
+        
+        TablaDatosMostrar.setDefaultEditor(Object.class, null);
+        
+    }//GEN-LAST:event_btBuscarProductoActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaDatosMostrar;
     private javax.swing.JButton btBuscarProducto;
     private javax.swing.JButton btnRegresarMenu;
     private javax.swing.JLabel jLabel1;
@@ -168,7 +201,6 @@ public class VBuscarCarritoView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtCodigoProductoBuscar;
     // End of variables declaration//GEN-END:variables
 }

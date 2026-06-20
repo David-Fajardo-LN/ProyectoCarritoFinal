@@ -32,6 +32,7 @@ public class VModificarProductoView extends javax.swing.JFrame {
     
     private void regresarVentanaPrincipal() {
         principal.setVisible(true);
+        principal.setLocationRelativeTo(null);
         this.dispose();
     }
 
@@ -51,18 +52,18 @@ public class VModificarProductoView extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        lbBuscarCodigo = new javax.swing.JTextField();
+        txtBuscarCodigo = new javax.swing.JTextField();
         btnBuscarProducto = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        lbCodigoProducto = new javax.swing.JTextField();
+        txtCodigoProducto = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        lbNombreProducto = new javax.swing.JTextField();
+        txtNombreProducto = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        lbPrecioProducto = new javax.swing.JTextField();
+        txtPrecioProducto = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        lbCodigoPermiso1 = new javax.swing.JTextField();
+        txtCodigoPermiso1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 102));
@@ -111,31 +112,31 @@ public class VModificarProductoView extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Buscar Codigo:");
 
-        lbBuscarCodigo.addActionListener(this::lbBuscarCodigoActionPerformed);
+        txtBuscarCodigo.addActionListener(this::txtBuscarCodigoActionPerformed);
 
         btnBuscarProducto.setText("buscar");
         btnBuscarProducto.addActionListener(this::btnBuscarProductoActionPerformed);
 
-        jButton2.setText("CANCELAR");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        jButton3.setText("MODIFICAR");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        btnModificar.setText("MODIFICAR");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("CODIGO:");
 
-        lbCodigoProducto.addActionListener(this::lbCodigoProductoActionPerformed);
+        txtCodigoProducto.addActionListener(this::txtCodigoProductoActionPerformed);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("NOMBRE:");
 
-        lbNombreProducto.addActionListener(this::lbNombreProductoActionPerformed);
+        txtNombreProducto.addActionListener(this::txtNombreProductoActionPerformed);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("PRECIO: ");
 
-        lbPrecioProducto.addActionListener(this::lbPrecioProductoActionPerformed);
+        txtPrecioProducto.addActionListener(this::txtPrecioProductoActionPerformed);
 
         jLabel1.setText("DATOS DE PRODUCTO:");
 
@@ -153,7 +154,7 @@ public class VModificarProductoView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -166,19 +167,19 @@ public class VModificarProductoView extends javax.swing.JFrame {
                                     .addComponent(jLabel5))
                                 .addGap(30, 30, 30)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lbNombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                                    .addComponent(lbCodigoProducto)
-                                    .addComponent(lbPrecioProducto)))
+                                    .addComponent(txtNombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                                    .addComponent(txtCodigoProducto)
+                                    .addComponent(txtPrecioProducto)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbCodigoPermiso1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtCodigoPermiso1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -187,7 +188,7 @@ public class VModificarProductoView extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBuscarProducto))
                 .addGap(18, 18, 18)
@@ -195,23 +196,23 @@ public class VModificarProductoView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(lbCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbPrecioProducto)
+                    .addComponent(txtPrecioProducto)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                    .addComponent(lbCodigoPermiso1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigoPermiso1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -232,56 +233,60 @@ public class VModificarProductoView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lbBuscarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbBuscarCodigoActionPerformed
+    private void txtBuscarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarCodigoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lbBuscarCodigoActionPerformed
+    }//GEN-LAST:event_txtBuscarCodigoActionPerformed
 
-    private void lbCodigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbCodigoProductoActionPerformed
+    private void txtCodigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lbCodigoProductoActionPerformed
+    }//GEN-LAST:event_txtCodigoProductoActionPerformed
 
-    private void lbNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbNombreProductoActionPerformed
+    private void txtNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lbNombreProductoActionPerformed
+    }//GEN-LAST:event_txtNombreProductoActionPerformed
 
-    private void lbPrecioProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbPrecioProductoActionPerformed
+    private void txtPrecioProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lbPrecioProductoActionPerformed
+    }//GEN-LAST:event_txtPrecioProductoActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
-        String codigoBuscar = lbBuscarCodigo.getText();
-        Producto p = controlador.buscarProductoPorCodigo(codigoBuscar);
+        String codigoBuscar = txtBuscarCodigo.getText();
+        Producto p = controlador.retornarProductoPorCodigo(codigoBuscar);
         
         if(p == null){
             JOptionPane.showMessageDialog(null,"Error: Producto no encontrado");
             return;
         }
         
-        lbCodigoProducto.setText(p.getCodigo());
-        lbNombreProducto.setText(p.getNombre());
+        txtCodigoProducto.setText(p.getCodigo());
+        txtNombreProducto.setText(p.getNombre());
         
         String precio = String.valueOf(p.getPrecio());
-        lbPrecioProducto.setText(precio);
+        txtPrecioProducto.setText(precio);
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         
-        String codigoAModificar = lbBuscarCodigo.getText();
-        String codigoPermiso = lbCodigoPermiso1.getText();
-        String nuevoCodigo = lbCodigoProducto.getText();
-        String nuevoNombre = lbNombreProducto.getText();
-        String nuevoPrecio = lbPrecioProducto.getText();
+        String codigoAModificar = txtBuscarCodigo.getText();
+        String codigoPermiso = txtCodigoPermiso1.getText();
+        String nuevoCodigo = txtCodigoProducto.getText();
+        String nuevoNombre = txtNombreProducto.getText();
+        String nuevoPrecio = txtPrecioProducto.getText();
         
         boolean procesoExitoso = controlador.modificarProducto(codigoAModificar, codigoPermiso, nuevoCodigo, nuevoNombre, nuevoPrecio);
         
         if(procesoExitoso){
-            regresarVentanaPrincipal();
+            txtBuscarCodigo.setText("");
+            txtCodigoPermiso1.setText("");
+            txtCodigoProducto.setText("");
+            txtNombreProducto.setText("");
+            txtPrecioProducto.setText("");
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         regresarVentanaPrincipal();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,8 +295,8 @@ public class VModificarProductoView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarProducto;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -303,11 +308,11 @@ public class VModificarProductoView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField lbBuscarCodigo;
     private javax.swing.JTextField lbCodigoPermiso;
-    private javax.swing.JTextField lbCodigoPermiso1;
-    private javax.swing.JTextField lbCodigoProducto;
-    private javax.swing.JTextField lbNombreProducto;
-    private javax.swing.JTextField lbPrecioProducto;
+    private javax.swing.JTextField txtBuscarCodigo;
+    private javax.swing.JTextField txtCodigoPermiso1;
+    private javax.swing.JTextField txtCodigoProducto;
+    private javax.swing.JTextField txtNombreProducto;
+    private javax.swing.JTextField txtPrecioProducto;
     // End of variables declaration//GEN-END:variables
 }

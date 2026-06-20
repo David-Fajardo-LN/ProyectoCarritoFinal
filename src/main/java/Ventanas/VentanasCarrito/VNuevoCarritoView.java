@@ -4,7 +4,15 @@
  */
 package Ventanas.VentanasCarrito;
 
+import Controladores.CarritoControlador;
+import Controladores.ProductoControlador;
+import Logica.Carrito;
+import Logica.ItemCarrito;
+import Logica.Producto;
 import Ventanas.VPrincipalView;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,9 +21,17 @@ import Ventanas.VPrincipalView;
 public class VNuevoCarritoView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VNuevoCarritoView.class.getName());
-
     
+    private Producto productoEncontrado;
+    
+    private Carrito nuevoCarrito;
+    private ArrayList<ItemCarrito> items;
+    
+    private CarritoControlador controladorCarrito;
+    private ProductoControlador controladorProducto;
     private VPrincipalView principal;
+    
+    
     
     public void setVentanaPrincipal(VPrincipalView v1){
         this.principal=v1;
@@ -24,14 +40,33 @@ public class VNuevoCarritoView extends javax.swing.JFrame {
     
     private void regresarVentanaPrincipal() {
         principal.setVisible(true);
+        principal.setLocationRelativeTo(null);
         this.dispose();
     }
     
     /**
      * Creates new form CrearCarrito
      */
-    public VNuevoCarritoView() {
+    public VNuevoCarritoView(CarritoControlador cc, ProductoControlador pc) {
+        this.controladorCarrito=cc;
+        this.controladorProducto=pc;
+        this.nuevoCarrito = new Carrito();
+        this.items= new ArrayList<>();
         initComponents();
+    }
+    
+    private void mostrarProductos(){  
+        DefaultTableModel modelo =  (DefaultTableModel) TablaDatosNuevoCarrito.getModel();
+        modelo.setRowCount(0);
+        for(ItemCarrito i : items){
+            modelo.addRow(new Object[]{
+                i.getProducto().getCodigo(),
+                i.getProducto().getNombre(),
+                i.getProducto().getPrecio(),
+                i.getCantidad()
+        });
+        }
+        
     }
 
     /**
@@ -51,7 +86,7 @@ public class VNuevoCarritoView extends javax.swing.JFrame {
         btBuscarProducto = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaDatosNuevoCarrito = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -103,10 +138,12 @@ public class VNuevoCarritoView extends javax.swing.JFrame {
         jLabel2.setText("CODIGO DE PRODUCTO A REGISTRAR:");
 
         txtCodigoProductoBuscar.setBackground(new java.awt.Color(255, 255, 153));
+        txtCodigoProductoBuscar.addActionListener(this::txtCodigoProductoBuscarActionPerformed);
 
         btBuscarProducto.setText("BUSCAR");
+        btBuscarProducto.addActionListener(this::btBuscarProductoActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaDatosNuevoCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -117,7 +154,7 @@ public class VNuevoCarritoView extends javax.swing.JFrame {
                 "Codigo", "Nombre", "Precio", "Cantidad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaDatosNuevoCarrito);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel3.setText("Subtotal: ");
@@ -137,7 +174,7 @@ public class VNuevoCarritoView extends javax.swing.JFrame {
         btGenerarCarrito.setText("GENERAR CARRITO");
         btGenerarCarrito.addActionListener(this::btGenerarCarritoActionPerformed);
 
-        btCancelar.setText("CANCELAR");
+        btCancelar.setText("REGRESAR");
         btCancelar.addActionListener(this::btCancelarActionPerformed);
 
         jLabel4.setText("NOMBRE:");
@@ -161,6 +198,7 @@ public class VNuevoCarritoView extends javax.swing.JFrame {
         txtCantidadProducto.addActionListener(this::txtCantidadProductoActionPerformed);
 
         btAgregarProducto.setText("AGREGAR PRODUCTO");
+        btAgregarProducto.addActionListener(this::btAgregarProductoActionPerformed);
 
         jLabel11.setText("CODIGO DE CARRITO: ");
 
@@ -272,12 +310,13 @@ public class VNuevoCarritoView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel11)
-                                .addComponent(txtCodigoDeCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtCodigoDeCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -298,7 +337,32 @@ public class VNuevoCarritoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btGenerarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGenerarCarritoActionPerformed
-        // TODO add your handling code here:
+        String codigoCarritoNuevo = txtCodigoDeCarrito.getText();
+        if(codigoCarritoNuevo.isBlank()){
+            JOptionPane.showMessageDialog(null, "Error: campo de codigo de carrito vacio");
+            return;
+        }
+        
+        if(controladorCarrito.existeCarritoPorCodigo(codigoCarritoNuevo)){
+            JOptionPane.showMessageDialog(null, "Error: el codigo de carrito ya existe");
+            return;
+        }
+        
+        controladorCarrito.agregarCarrito(codigoCarritoNuevo, this.items);
+        
+        JOptionPane.showMessageDialog(null, "Carrito agregado con exito");
+        
+        DefaultTableModel modelo =  (DefaultTableModel) TablaDatosNuevoCarrito.getModel();
+        modelo.setRowCount(0);
+        
+        txtCantidadProducto.setText("");
+        txtCodigoProducto.setText("");
+        txtNombreProducto.setText("");
+        txtPrecioProducto.setText("");
+        txtCodigoProductoBuscar.setText("");
+        txtSubtotal.setText("");
+        txtIVA.setText("");
+        txtTotal.setText("");
     }//GEN-LAST:event_btGenerarCarritoActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
@@ -313,8 +377,87 @@ public class VNuevoCarritoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioProductoActionPerformed
 
+    private void txtCodigoProductoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoProductoBuscarActionPerformed
+ 
+    }//GEN-LAST:event_txtCodigoProductoBuscarActionPerformed
+
+    private void btAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAgregarProductoActionPerformed
+        
+        String cantidadString = txtCantidadProducto.getText();
+        
+        if(this.productoEncontrado == null){
+            JOptionPane.showMessageDialog(null, "Error: No se encontro el producto");
+            return;
+        }
+        
+        if(cantidadString.isBlank()){
+            JOptionPane.showMessageDialog(null, "Error: Campo de cantidad vacio");
+            return;
+        }
+        
+        int cantidad;
+        try{
+            cantidad = Integer.parseInt(cantidadString);
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Error: Ingrese un valor numerico en cantidad");
+            return;
+        }
+        
+        ItemCarrito item = new ItemCarrito(productoEncontrado, cantidad);
+        items.add(item);
+        
+        
+        mostrarProductos();
+        
+        txtCantidadProducto.setText("");
+        txtCodigoProducto.setText("");
+        txtNombreProducto.setText("");
+        txtPrecioProducto.setText("");
+        txtCodigoProductoBuscar.setText("");
+        
+        double subtotal = controladorCarrito.calcularSubtotal(items);
+        String subTotal = String.valueOf(subtotal);
+        
+        double iva = subtotal * (0.15);
+        String IVA = String.valueOf(iva);
+        
+        double total = subtotal + iva;
+        String Total = String.valueOf(total);
+        
+        txtSubtotal.setText(subTotal);
+        txtIVA.setText(IVA);
+        txtTotal.setText(Total);
+        
+        
+        
+        this.productoEncontrado=null;
+        
+        TablaDatosNuevoCarrito.setDefaultEditor(Object.class, null);
+
+    }//GEN-LAST:event_btAgregarProductoActionPerformed
+
+    private void btBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarProductoActionPerformed
+        
+        String codigoProductoBuscar = txtCodigoProductoBuscar.getText();
+        
+        Producto p = controladorProducto.retornarProductoPorCodigo(codigoProductoBuscar);
+        if(p == null){
+            JOptionPane.showMessageDialog(null, "Error: Producto no encontrado");
+            return;
+        }
+        
+        this.productoEncontrado = p;
+        
+        txtCodigoProducto.setText(p.getCodigo());
+        txtNombreProducto.setText(p.getNombre());
+        String precio = String.valueOf(p.getPrecio());
+        txtPrecioProducto.setText(precio);
+        
+    }//GEN-LAST:event_btBuscarProductoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaDatosNuevoCarrito;
     private javax.swing.JButton btAgregarProducto;
     private javax.swing.JButton btBuscarProducto;
     private javax.swing.JButton btCancelar;
@@ -333,7 +476,6 @@ public class VNuevoCarritoView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField txtCantidadProducto;
     private javax.swing.JTextField txtCodigoDeCarrito;

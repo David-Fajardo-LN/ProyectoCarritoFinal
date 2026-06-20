@@ -4,7 +4,12 @@
  */
 package Ventanas.VentanasCarrito;
 
+import Controladores.CarritoControlador;
+import Logica.Carrito;
+import Logica.ItemCarrito;
 import Ventanas.VPrincipalView;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,25 +19,42 @@ public class VEliminarCarritoView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VEliminarCarritoView.class.getName());
 
-    
+    private Carrito encontado;
+    private CarritoControlador controlador;
     private VPrincipalView principal;
     
     /**
      * Creates new form VBuscarCarritoView
      */
-    public VEliminarCarritoView() {
+    public VEliminarCarritoView(CarritoControlador controlador) {
+        this.controlador=controlador;
         initComponents();
     }
     
     
     public void setVentanaPrincipal(VPrincipalView v1){
+        
         this.principal=v1;
     }
     
     
     private void regresarVentanaPrincipal() {
         principal.setVisible(true);
+        principal.setLocationRelativeTo(null);
         this.dispose();
+    }
+    private void mostrarProductos(Carrito c){  
+        ArrayList<ItemCarrito> items = c.getItems();
+        DefaultTableModel modelo =  (DefaultTableModel) TablaMostrarDatos.getModel();
+        modelo.setRowCount(0);  
+        for(ItemCarrito i : items){
+            modelo.addRow(new Object[]{
+                i.getProducto().getCodigo(),
+                i.getProducto().getNombre(),
+                i.getProducto().getPrecio(),
+                i.getCantidad()
+            });
+        }
     }
 
     /**
@@ -52,7 +74,7 @@ public class VEliminarCarritoView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaMostrarDatos = new javax.swing.JTable();
         btnEliminar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtCodigoPermiso = new javax.swing.JTextField();
@@ -86,12 +108,13 @@ public class VEliminarCarritoView extends javax.swing.JFrame {
         txtCodigoProductoBuscar.setBackground(new java.awt.Color(255, 255, 153));
 
         btBuscarCarrito.setText("BUSCAR");
+        btBuscarCarrito.addActionListener(this::btBuscarCarritoActionPerformed);
 
         jLabel2.setText("CODIGO DE CARRITO A BUSCAR:");
 
         jLabel3.setText("LISTA DE PRODUCTOS DEL CARRITO ENCONTRADO:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaMostrarDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -102,9 +125,10 @@ public class VEliminarCarritoView extends javax.swing.JFrame {
                 "Codigo", "Nombre", "Precio", "Cantidad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaMostrarDatos);
 
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnCancelar.setText("CANCELAR");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
@@ -179,12 +203,33 @@ public class VEliminarCarritoView extends javax.swing.JFrame {
         regresarVentanaPrincipal();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btBuscarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCarritoActionPerformed
+        
+        String codigo = txtCodigoProductoBuscar.getText();
+        Carrito c = controlador.retornarCarritoPorCodigo(codigo);
+        this.encontado=c;
+        mostrarProductos(c);
+        TablaMostrarDatos.setDefaultEditor(Object.class, null);
+    }//GEN-LAST:event_btBuscarCarritoActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        String codigoPermiso = txtCodigoPermiso.getText();
+        controlador.eliminarCarrito(codigoPermiso, encontado);
+        this.encontado=null;
+        
+        DefaultTableModel modelo =  (DefaultTableModel) TablaMostrarDatos.getModel();
+        modelo.setRowCount(0);
+        txtCodigoProductoBuscar.setText("");
+        txtCodigoPermiso.setText("");
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaMostrarDatos;
     private javax.swing.JButton btBuscarCarrito;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
@@ -195,7 +240,6 @@ public class VEliminarCarritoView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtCodigoPermiso;
     private javax.swing.JTextField txtCodigoProductoBuscar;
     // End of variables declaration//GEN-END:variables

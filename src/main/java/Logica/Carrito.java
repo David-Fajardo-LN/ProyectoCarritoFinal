@@ -16,6 +16,11 @@ public class Carrito {
     private String codigo;
     private ArrayList<ItemCarrito> items;
 
+    public Carrito() {
+    }
+
+    
+    
     public Carrito(String codigo) {
         this.codigo=codigo;
         this.items = new ArrayList<>();
@@ -29,6 +34,7 @@ public class Carrito {
 
     public ArrayList<ItemCarrito> getItems() {return items;}
     public void agregarItem(ItemCarrito item) {this.items.add(item);}
+    public void setItems(ArrayList<ItemCarrito> items){this.items=items;}
     public String getCodigo() {return codigo;}
     public void setCodigo(String codigo) {this.codigo = codigo;}
     
@@ -56,7 +62,7 @@ public class Carrito {
         return Objects.equals(this.items, other.items);
     }
     
-    public double calcularTotal(){
+    public double calcularSubtotal(){
         double total=0;
         for(ItemCarrito i : items)
             total += i.calcularSubtotal();

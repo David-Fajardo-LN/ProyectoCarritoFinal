@@ -91,7 +91,7 @@ public class ProductoControlador {
     
     
     
-    public boolean eliminarProducto(String codigoEliminar, String codigoPermiso){
+    public boolean eliminarProductoPorCodigo(String codigoEliminar, String codigoPermiso){
 
         codigoEliminar = codigoEliminar.trim();
         codigoPermiso = codigoPermiso.trim();
@@ -181,7 +181,7 @@ public class ProductoControlador {
     
     
     
-    public Producto buscarProductoPorCodigo(String codigo){
+    public Producto retornarProductoPorCodigo(String codigo){
         codigo = codigo.trim();
         
         if(codigo.isBlank()){
@@ -191,7 +191,7 @@ public class ProductoControlador {
         return productoDaoMemoria.retornarProductoPorCodigo(codigo);
     }
     
-    public Producto buscarProductoPorNombre(String nombre){
+    public Producto retornarProductoPorNombre(String nombre){
         nombre = nombre.trim();
         if(nombre.isBlank()){
             JOptionPane.showMessageDialog(null, "Error: el campo de nombre esta vacio");
@@ -202,5 +202,20 @@ public class ProductoControlador {
     
     public ArrayList<Producto> retornarProductos(){
         return productoDaoMemoria.retornarProductos();
+    }
+    
+    public boolean eliminarProductoPorObjeto(Producto p, String codigoPermiso){
+        if(codigoPermiso.isBlank()){
+            JOptionPane.showMessageDialog(null, "Error: Campo de codigo de permiso vacio");
+            return false;
+        }
+        
+        if(!codigoPermiso.equals("123")){
+            JOptionPane.showMessageDialog(null, "Error: Codigo de permiso denegado");
+            return false;
+        }
+        
+        productoDaoMemoria.eliminarProductoPorObjeto(p);
+        return true;
     }
 }

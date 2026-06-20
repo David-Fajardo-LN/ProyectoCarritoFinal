@@ -36,6 +36,7 @@ public class VListarProductosView extends javax.swing.JFrame {
     
     private void regresarVentanaPrincipal() {
         principal.setVisible(true);
+        principal.setLocationRelativeTo(null);
         this.dispose();
     }
     

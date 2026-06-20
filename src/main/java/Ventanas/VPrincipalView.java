@@ -4,6 +4,7 @@
  */
 package Ventanas;
 
+import Controladores.CarritoControlador;
 import Controladores.ProductoControlador;
 import Ventanas.VentanasCarrito.VBuscarCarritoView;
 import Ventanas.VentanasCarrito.VEliminarCarritoView;
@@ -22,12 +23,14 @@ import Ventanas.VentanasProducto.VModificarProductoView;
  */
 public class VPrincipalView extends javax.swing.JFrame {
 
-    private ProductoControlador controlador;
+    private ProductoControlador controladorProducto;
+    private CarritoControlador controladorCarrito;
     /**
      * Creates new form PrincipalView
      */
-    public VPrincipalView(ProductoControlador controlador) {
-        this.controlador = controlador;
+    public VPrincipalView(ProductoControlador controlador, CarritoControlador controladorCarrito) {
+        this.controladorProducto = controlador;
+        this.controladorCarrito= controladorCarrito;
         initComponents();
         
     }
@@ -52,6 +55,8 @@ public class VPrincipalView extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         opcionCrearProducto = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -109,27 +114,44 @@ public class VPrincipalView extends javax.swing.JFrame {
         jTextField2.addActionListener(this::jTextField2ActionPerformed);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setText("CODIGO DE PERMISO PARA MODIFICAR, Y ELIMINAR PRODUCTOS :");
+        jLabel7.setText("CODIGO DE PERMISO PARA MODIFICAR, Y ELIMINAR ELEMENTOS :");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setText("EL SISTEMA YA TIENE UNA BASE INICIAL, NO HACE FALTA AGREGAR ELEMETNOS");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setText("PARA PROBAR TODAS LAS FUNCIONALIDADES");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
+                .addGap(58, 58, 58)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -137,9 +159,9 @@ public class VPrincipalView extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addGap(66, 66, 66)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(4, 4, 4)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(191, Short.MAX_VALUE))
         );
@@ -151,9 +173,9 @@ public class VPrincipalView extends javax.swing.JFrame {
                         .addGap(193, 193, 193)
                         .addComponent(jLabel6))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
+                        .addGap(57, 57, 57)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -170,7 +192,7 @@ public class VPrincipalView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         desktopPane.add(jPanel2);
@@ -260,7 +282,7 @@ public class VPrincipalView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void opcionEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEliminarProductoActionPerformed
-        VEliminarProductoView eliminarProducto = new VEliminarProductoView(controlador);
+        VEliminarProductoView eliminarProducto = new VEliminarProductoView(controladorProducto);
         eliminarProducto.setVentanaPrincipal(this);
         eliminarProducto.setVisible(true);
         eliminarProducto.setLocationRelativeTo(null);
@@ -269,7 +291,7 @@ public class VPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionEliminarProductoActionPerformed
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-        VAgregarProductoView agregarProducto = new VAgregarProductoView(controlador);
+        VAgregarProductoView agregarProducto = new VAgregarProductoView(controladorProducto);
         agregarProducto.setVentanaPrincipal(this);
         agregarProducto.setVisible(true);
         agregarProducto.setLocationRelativeTo(null);
@@ -278,7 +300,7 @@ public class VPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void opcionBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionBuscarProductoActionPerformed
-        VBuscarProductoView buscarProducto = new VBuscarProductoView(controlador);
+        VBuscarProductoView buscarProducto = new VBuscarProductoView(controladorProducto);
         buscarProducto.setVentanaPrincipal(this);
         buscarProducto.setVisible(true);
         buscarProducto.setLocationRelativeTo(null);
@@ -287,7 +309,7 @@ public class VPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionBuscarProductoActionPerformed
 
     private void opcionModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModificarProductoActionPerformed
-        VModificarProductoView agregarProducto = new VModificarProductoView(controlador);
+        VModificarProductoView agregarProducto = new VModificarProductoView(controladorProducto);
         agregarProducto.setVentanaPrincipal(this);
         agregarProducto.setVisible(true);
         agregarProducto.setLocationRelativeTo(null);
@@ -301,7 +323,7 @@ public class VPrincipalView extends javax.swing.JFrame {
 
     private void listarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarProductosActionPerformed
         
-        VListarProductosView listarProductos = new VListarProductosView(controlador);
+        VListarProductosView listarProductos = new VListarProductosView(controladorProducto);
         listarProductos.setVentanaPrincipal(this);
         listarProductos.setVisible(true);
         listarProductos.setLocationRelativeTo(null);
@@ -311,7 +333,7 @@ public class VPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_listarProductosActionPerformed
 
     private void opcionNuevoCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionNuevoCarritoActionPerformed
-        VNuevoCarritoView nuevoCarrito = new VNuevoCarritoView();
+        VNuevoCarritoView nuevoCarrito = new VNuevoCarritoView(controladorCarrito,controladorProducto);
         nuevoCarrito.setVentanaPrincipal(this);
         nuevoCarrito.setVisible(true);
         nuevoCarrito.setLocationRelativeTo(null);
@@ -320,7 +342,7 @@ public class VPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionNuevoCarritoActionPerformed
 
     private void OopcionBuscarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OopcionBuscarCarritoActionPerformed
-        VBuscarCarritoView buscarCarrito = new VBuscarCarritoView();
+        VBuscarCarritoView buscarCarrito = new VBuscarCarritoView(controladorCarrito);
         buscarCarrito.setVentanaPrincipal(this);
         buscarCarrito.setVisible(true);
         buscarCarrito.setLocationRelativeTo(null);
@@ -329,7 +351,7 @@ public class VPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_OopcionBuscarCarritoActionPerformed
 
     private void opcionModificarInformacionCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModificarInformacionCarritoActionPerformed
-        VModificarCarritoView modificarCarrito = new VModificarCarritoView();
+        VModificarCarritoView modificarCarrito = new VModificarCarritoView(controladorCarrito,controladorProducto);
         modificarCarrito.setVentanaPrincipal(this);
         modificarCarrito.setVisible(true);
         modificarCarrito.setLocationRelativeTo(null);
@@ -338,7 +360,7 @@ public class VPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionModificarInformacionCarritoActionPerformed
 
     private void opcionEliminarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEliminarCarritoActionPerformed
-        VEliminarCarritoView eliminarCarrito = new VEliminarCarritoView();
+        VEliminarCarritoView eliminarCarrito = new VEliminarCarritoView(controladorCarrito);
         eliminarCarrito.setVentanaPrincipal(this);
         eliminarCarrito.setVisible(true);
         eliminarCarrito.setLocationRelativeTo(null);
@@ -360,6 +382,8 @@ public class VPrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;

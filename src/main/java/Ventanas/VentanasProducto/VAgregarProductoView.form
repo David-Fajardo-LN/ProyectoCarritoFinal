@@ -50,17 +50,17 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel4" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="lbPrecioProducto" min="-2" pref="220" max="-2" attributes="0"/>
+                          <Component id="txtPrecioProducto" min="-2" pref="220" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel2" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="lbCodigoProducto" min="-2" pref="220" max="-2" attributes="0"/>
+                          <Component id="txtCodigoProducto" min="-2" pref="220" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel3" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="lbNombreProducto" min="-2" pref="220" max="-2" attributes="0"/>
+                          <Component id="txtNombreProducto" min="-2" pref="220" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="btnGuardar" min="-2" pref="133" max="-2" attributes="0"/>
@@ -85,17 +85,17 @@
                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="lbCodigoProducto" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="txtCodigoProducto" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="lbNombreProducto" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="txtNombreProducto" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="lbPrecioProducto" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="txtPrecioProducto" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                   <Component id="btnGuardar" min="-2" pref="55" max="-2" attributes="0"/>
@@ -161,12 +161,12 @@
             <Property name="text" type="java.lang.String" value="CODIGO: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="lbCodigoProducto">
+        <Component class="javax.swing.JTextField" name="txtCodigoProducto">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lbCodigoProductoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCodigoProductoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="lbNombreProducto">
+        <Component class="javax.swing.JTextField" name="txtNombreProducto">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -176,7 +176,7 @@
             <Property name="text" type="java.lang.String" value="NOMBRE:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="lbPrecioProducto">
+        <Component class="javax.swing.JTextField" name="txtPrecioProducto">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -196,7 +196,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnCancelar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CANCELAR"/>
+            <Property name="text" type="java.lang.String" value="REGRESAR"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>

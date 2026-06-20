@@ -4,7 +4,7 @@
  */
 package DaoClases;
 
-import DaoInterfazes.CarritoDao;
+import DaoInterfaces.CarritoDao;
 import Logica.Carrito;
 import Logica.CarritoBaseDatos;
 import Logica.ItemCarrito;
@@ -18,6 +18,13 @@ public class CarritoDaoMemoria implements CarritoDao{
     
     private CarritoBaseDatos carritos;
 
+    public CarritoDaoMemoria(CarritoBaseDatos carritos) {
+        this.carritos = carritos;
+    }
+
+    
+    
+    
     @Override
     public void agregarCarrito(String codigo, ArrayList<ItemCarrito> items) {
         carritos.agregarCarrito(new Carrito(codigo, items));
@@ -46,4 +53,11 @@ public class CarritoDaoMemoria implements CarritoDao{
     public Carrito retornarCarritoPorCodigo(String codigo) {
         return carritos.retornarCarritoPorCodigoBase(codigo);
     }
+
+    @Override
+    public void eliminarCarritoUsandoProducto(Carrito c) {
+        carritos.eliminarCarritoPorObjeto(c);
+    }
+   
+    
 }

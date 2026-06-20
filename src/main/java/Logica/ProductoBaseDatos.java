@@ -17,7 +17,7 @@ public class ProductoBaseDatos {
     private ArrayList<Producto> productos;
 
     public ProductoBaseDatos() {
-        productos = generarProductosIniciales();
+        this.productos = generarProductosIniciales();
     }
     
 
@@ -62,6 +62,10 @@ public class ProductoBaseDatos {
         return null;
     }
     
+    public void eliminarProductoPorObjetoBase(Producto p){
+        productos.remove(p);
+    }
+    
     public void eliminarProductoDeLaBase(String codigo){
         for(int i = 0; i < productos.size(); i++){
             if(productos.get(i).getCodigo().equals(codigo)){
@@ -77,22 +81,22 @@ public class ProductoBaseDatos {
         ArrayList<Producto> productos = new ArrayList<>();
         
         productos.add(new Producto("1", "Arroz Super Extra 5kg", 6.50));
-        productos.add(new Producto("ALI-002", "Aceite Girasol 1L", 3.25));
-        productos.add(new Producto("ALI-003", "Leche Entera 1L", 1.10));
-        productos.add(new Producto("2", "Atún en aceite", 1.85));
-        productos.add(new Producto("ALI-005", "Azúcar Blanca 1kg", 1.20));
-        productos.add(new Producto("ALI-006", "Café Soluble 200g", 5.90));
+        productos.add(new Producto("2", "Aceite Girasol 1L", 3.25));
+        productos.add(new Producto("3", "Leche Entera 1L", 1.10));
+        productos.add(new Producto("4", "Atún en aceite", 1.85));
+        productos.add(new Producto("5", "Azúcar Blanca 1kg", 1.20));
+        productos.add(new Producto("6", "Café Soluble 200g", 5.90));
         
-        productos.add(new Producto("TEC-001", "Audífonos Bluetooth", 25.00));
-        productos.add(new Producto("TEC-002", "Memoria USB 64GB", 12.50));
-        productos.add(new Producto("TEC-003", "Mouse Inalámbrico", 15.00));
-        productos.add(new Producto("TEC-004", "Cable HDMI 2m", 8.00));
-        productos.add(new Producto("TEC-005", "Teclado USB", 18.00));
+        productos.add(new Producto("7", "Audífonos Bluetooth", 25.00));
+        productos.add(new Producto("8", "Memoria USB 64GB", 12.50));
+        productos.add(new Producto("9", "Mouse Inalámbrico", 15.00));
+        productos.add(new Producto("10", "Cable HDMI 2m", 8.00));
+        productos.add(new Producto("11", "Teclado USB", 18.00));
         
-        productos.add(new Producto("3", "Detergente Líquido 2L", 7.50));
-        productos.add(new Producto("HOG-002", "Papel Higiénico 12u", 5.50));
-        productos.add(new Producto("HOG-003", "Jabón de Mano", 1.50));
-        productos.add(new Producto("HOG-004", "Esponja de cocina", 0.75));
+        productos.add(new Producto("12", "Detergente Líquido 2L", 7.50));
+        productos.add(new Producto("13", "Papel Higiénico 12u", 5.50));
+        productos.add(new Producto("14", "Jabón de Mano", 1.50));
+        productos.add(new Producto("15", "Esponja de cocina", 0.75));
         
         return productos;
     }

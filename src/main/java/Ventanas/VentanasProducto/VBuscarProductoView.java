@@ -34,6 +34,7 @@ public class VBuscarProductoView extends javax.swing.JFrame {
     
     private void regresarVentanaPrincipal() {
         principal.setVisible(true);
+        principal.setLocationRelativeTo(null);
         this.dispose();
     }
 
@@ -52,8 +53,8 @@ public class VBuscarProductoView extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        lbNombreBuscar = new javax.swing.JTextField();
-        lbCodigoBuscar = new javax.swing.JTextField();
+        txtNombreBuscar = new javax.swing.JTextField();
+        txtCodigoBuscar = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnBuscarPorNombre = new javax.swing.JButton();
         btnBuscarPorCodigo = new javax.swing.JButton();
@@ -120,9 +121,9 @@ public class VBuscarProductoView extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("NOMBRE:");
 
-        lbNombreBuscar.addActionListener(this::lbNombreBuscarActionPerformed);
+        txtNombreBuscar.addActionListener(this::txtNombreBuscarActionPerformed);
 
-        lbCodigoBuscar.addActionListener(this::lbCodigoBuscarActionPerformed);
+        txtCodigoBuscar.addActionListener(this::txtCodigoBuscarActionPerformed);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("CODIGO:");
@@ -186,8 +187,8 @@ public class VBuscarProductoView extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbCodigoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbNombreBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtCodigoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombreBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnBuscarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -204,12 +205,12 @@ public class VBuscarProductoView extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbCodigoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbNombreBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNombreBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -249,13 +250,13 @@ public class VBuscarProductoView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lbNombreBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbNombreBuscarActionPerformed
+    private void txtNombreBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lbNombreBuscarActionPerformed
+    }//GEN-LAST:event_txtNombreBuscarActionPerformed
 
-    private void lbCodigoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbCodigoBuscarActionPerformed
+    private void txtCodigoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lbCodigoBuscarActionPerformed
+    }//GEN-LAST:event_txtCodigoBuscarActionPerformed
 
     private void lbPrecioProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbPrecioProductoActionPerformed
         // TODO add your handling code here:
@@ -274,8 +275,8 @@ public class VBuscarProductoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnBuscarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPorNombreActionPerformed
-        String nombreBuscar = lbNombreBuscar.getText();
-        Producto p = controlador.buscarProductoPorNombre(nombreBuscar);
+        String nombreBuscar = txtNombreBuscar.getText();
+        Producto p = controlador.retornarProductoPorNombre(nombreBuscar);
         
         if(p == null){
             JOptionPane.showMessageDialog(null,"Error: Producto no encontrado");
@@ -292,8 +293,8 @@ public class VBuscarProductoView extends javax.swing.JFrame {
 
     private void btnBuscarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPorCodigoActionPerformed
         
-        String codigoBuscar = lbCodigoBuscar.getText();
-        Producto p  = controlador.buscarProductoPorCodigo(codigoBuscar);
+        String codigoBuscar = txtCodigoBuscar.getText();
+        Producto p  = controlador.retornarProductoPorCodigo(codigoBuscar);
         
         if(p == null){
             JOptionPane.showMessageDialog(null,"Error: Producto no encontrado");
@@ -305,6 +306,7 @@ public class VBuscarProductoView extends javax.swing.JFrame {
         
         String precio = String.valueOf(p.getPrecio());
         lbPrecioProducto.setText(precio);
+        
         
         
     }//GEN-LAST:event_btnBuscarPorCodigoActionPerformed
@@ -329,10 +331,10 @@ public class VBuscarProductoView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField lbCodigoBuscar;
     private javax.swing.JTextField lbCodigoProducto;
-    private javax.swing.JTextField lbNombreBuscar;
     private javax.swing.JTextField lbNombreProducto;
     private javax.swing.JTextField lbPrecioProducto;
+    private javax.swing.JTextField txtCodigoBuscar;
+    private javax.swing.JTextField txtNombreBuscar;
     // End of variables declaration//GEN-END:variables
 }

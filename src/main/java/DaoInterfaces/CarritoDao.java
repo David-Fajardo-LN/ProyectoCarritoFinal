@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package DaoInterfazes;
+package DaoInterfaces;
 
 import Logica.Carrito;
 import Logica.ItemCarrito;
@@ -19,5 +19,6 @@ public interface CarritoDao {
     void agregarCarrito(String codigo, ArrayList<ItemCarrito> items);
     void eliminarCarritoPorCodigo(String codigo);
     void modificarCarritoBase(String codigoCarritoAModificar, Carrito nuevoCarrito, String nuevoCodigo);
+    void eliminarCarritoUsandoProducto(Carrito c);
     
 }

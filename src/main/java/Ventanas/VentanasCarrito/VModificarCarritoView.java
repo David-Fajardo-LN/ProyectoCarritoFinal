@@ -4,7 +4,15 @@
  */
 package Ventanas.VentanasCarrito;
 
+import Controladores.CarritoControlador;
+import Controladores.ProductoControlador;
+import Logica.Carrito;
+import Logica.ItemCarrito;
+import Logica.Producto;
 import Ventanas.VPrincipalView;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,6 +23,13 @@ public class VModificarCarritoView extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VModificarCarritoView.class.getName());
 
     private VPrincipalView principal;
+    private Producto productoEncontrado;
+    private ArrayList<ItemCarrito> itemsModificados;
+    private Carrito carritoEncontrado;
+    private String codigoDeCarritoEncontrado;
+    
+    private CarritoControlador carritoControlador;
+    private ProductoControlador productoControlador;
             
             
     public void setVentanaPrincipal(VPrincipalView v1){
@@ -24,14 +39,47 @@ public class VModificarCarritoView extends javax.swing.JFrame {
     
     private void regresarVentanaPrincipal() {
         principal.setVisible(true);
+        principal.setLocationRelativeTo(null);
         this.dispose();
     }
     
     /**
      * Creates new form VBuscarCarritoView
      */
-    public VModificarCarritoView() {
+    public VModificarCarritoView(CarritoControlador cc, ProductoControlador pc) {
+        this.carritoControlador=cc;
+        this.productoControlador=pc;
         initComponents();
+    }
+    
+    private void mostrarProductos(){  
+        DefaultTableModel modelo =  (DefaultTableModel) TablaDatosCarrito.getModel();
+        modelo.setRowCount(0);
+        for(ItemCarrito i : itemsModificados){
+            modelo.addRow(new Object[]{
+                i.getProducto().getCodigo(),
+                i.getProducto().getNombre(),
+                i.getProducto().getPrecio(),
+                i.getCantidad()
+        });
+        }
+        
+    }
+    
+    private boolean existeProductoEnModificados(String codigo){
+        for(ItemCarrito i : itemsModificados){
+            if(i.getProducto().getCodigo().equals(codigo))
+                return true;
+        }
+        return false;
+    }
+    
+    private void limpiarDatosProductoAgregar(){
+        txtCantidadProductoAgregar.setText("");
+        txtCodigoProductoAgregar.setText("");
+        txtNombreProductoAgregar.setText("");
+        txtPrecioProductoAgregar.setText("");
+        txtCodigoCarritoBuscar.setText("");
     }
 
     /**
@@ -45,15 +93,38 @@ public class VModificarCarritoView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtCodigoProductoBuscar = new javax.swing.JTextField();
+        txtCodigoCarritoBuscar = new javax.swing.JTextField();
         btBuscarCarrito = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        btnModificar = new javax.swing.JButton();
+        TablaDatosCarrito = new javax.swing.JTable();
+        btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        txtCodigoAEliminar = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        txtCodigoProductoBuscar = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        btBuscarProductoAAgregar = new javax.swing.JButton();
+        txtCodigoProductoAgregar = new javax.swing.JTextField();
+        txtNombreProductoAgregar = new javax.swing.JTextField();
+        txtPrecioProductoAgregar = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtCantidadProductoAgregar = new javax.swing.JTextField();
+        btAgregarProductoACarrito = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JSeparator();
+        txtCodigoDePermiso = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,7 +132,7 @@ public class VModificarCarritoView extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("BUSCAR CARRITO DE COMPRAS");
+        jLabel1.setText("MODIFICAR CARRITO DE COMPRAS");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -80,15 +151,17 @@ public class VModificarCarritoView extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        txtCodigoProductoBuscar.setBackground(new java.awt.Color(255, 255, 153));
+        txtCodigoCarritoBuscar.setBackground(new java.awt.Color(255, 255, 153));
 
         btBuscarCarrito.setText("BUSCAR");
+        btBuscarCarrito.addActionListener(this::btBuscarCarritoActionPerformed);
 
-        jLabel2.setText("CODIGO DE CARRITO A BUSCAR:");
+        jLabel2.setText("Codigo de carrito a buscar:");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("LISTA DE PRODUCTOS DEL CARRITO ENCONTRADO:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaDatosCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -99,12 +172,59 @@ public class VModificarCarritoView extends javax.swing.JFrame {
                 "Codigo", "Nombre", "Precio", "Cantidad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaDatosCarrito);
 
-        btnModificar.setText("MODIFICAR");
+        btnAceptar.setText("ACEPTAR");
+        btnAceptar.addActionListener(this::btnAceptarActionPerformed);
 
         btnCancelar.setText("CANCELAR");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+
+        jLabel4.setText("Codigo a eliminar:");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setText("SECCION PARA ELIMINAR PRODUCTO DE CARRITO");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setText("SECCION PARA AGREGAR UN PRODUCTO");
+
+        txtCodigoProductoBuscar.setBackground(new java.awt.Color(255, 255, 153));
+        txtCodigoProductoBuscar.addActionListener(this::txtCodigoProductoBuscarActionPerformed);
+
+        jLabel7.setText("Codigo de producto:");
+
+        btBuscarProductoAAgregar.setText("BUSCAR");
+        btBuscarProductoAAgregar.addActionListener(this::btBuscarProductoAAgregarActionPerformed);
+
+        txtCodigoProductoAgregar.setEditable(false);
+
+        txtNombreProductoAgregar.setEditable(false);
+
+        txtPrecioProductoAgregar.setEditable(false);
+        txtPrecioProductoAgregar.addActionListener(this::txtPrecioProductoAgregarActionPerformed);
+
+        jLabel8.setText("NOMBRE:");
+
+        jLabel9.setText("PRECIO:");
+
+        jLabel10.setText("CODIGO:");
+
+        jLabel11.setText("INGRESE LA CANTIDAD:");
+
+        jLabel12.setText("Cantidad:");
+
+        txtCantidadProductoAgregar.setBackground(new java.awt.Color(255, 255, 153));
+        txtCantidadProductoAgregar.addActionListener(this::txtCantidadProductoAgregarActionPerformed);
+
+        btAgregarProductoACarrito.setText("AGREGAR PRODUCTO");
+        btAgregarProductoACarrito.addActionListener(this::btAgregarProductoACarritoActionPerformed);
+
+        txtCodigoDePermiso.setBackground(new java.awt.Color(255, 255, 153));
+
+        jLabel13.setText("Codigo de permiso para modificar:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,45 +234,142 @@ public class VModificarCarritoView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCodigoProductoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btBuscarCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCodigoDePermiso, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCodigoCarritoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                                .addComponent(btBuscarCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtCodigoProductoBuscar)
+                                    .addComponent(btBuscarProductoAAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtNombreProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtPrecioProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCodigoProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(74, 74, 74))
+                                    .addComponent(btAgregarProductoACarrito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCantidadProductoAgregar))))
+                            .addComponent(jSeparator2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCodigoAEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jSeparator4))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43)
+                                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCodigoProductoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btBuscarCarrito))
-                .addGap(28, 28, 28)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtCodigoDePermiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtCodigoCarritoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btBuscarCarrito))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodigoAEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar)
+                    .addComponent(jLabel4))
+                .addGap(27, 27, 27)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodigoProductoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btBuscarProductoAAgregar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txtCodigoProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(txtNombreProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(txtCantidadProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtPrecioProductoAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btAgregarProductoACarrito))))
+                .addGap(29, 29, 29)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 28, Short.MAX_VALUE))
+                .addGap(92, 92, 92))
         );
 
         pack();
@@ -162,22 +379,179 @@ public class VModificarCarritoView extends javax.swing.JFrame {
         regresarVentanaPrincipal();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtCodigoProductoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoProductoBuscarActionPerformed
+
+    }//GEN-LAST:event_txtCodigoProductoBuscarActionPerformed
+
+    private void btBuscarProductoAAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarProductoAAgregarActionPerformed
+
+        String codigoProductoBuscar = txtCodigoProductoBuscar.getText();
+
+        Producto p = productoControlador.retornarProductoPorCodigo(codigoProductoBuscar);
+        if(p == null){
+            JOptionPane.showMessageDialog(null, "Error: Producto no encontrado");
+            return;
+        }
+
+        this.productoEncontrado = p;
+
+        txtCodigoProductoAgregar.setText(p.getCodigo());
+        txtNombreProductoAgregar.setText(p.getNombre());
+        String precio = String.valueOf(p.getPrecio());
+        txtPrecioProductoAgregar.setText(precio);
+
+    }//GEN-LAST:event_btBuscarProductoAAgregarActionPerformed
+
+    private void txtPrecioProductoAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioProductoAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioProductoAgregarActionPerformed
+
+    private void txtCantidadProductoAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadProductoAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadProductoAgregarActionPerformed
+
+    private void btAgregarProductoACarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAgregarProductoACarritoActionPerformed
+
+        String cantidadString = txtCantidadProductoAgregar.getText();
+        
+        String codigoPermiso = txtCodigoDePermiso.getText();
+        if(!codigoPermiso.equals("123")){
+            JOptionPane.showMessageDialog(null, "Error: Codigo de permiso denegado");
+            return;
+        }
+        
+        if(this.itemsModificados == null){
+            JOptionPane.showMessageDialog(null, "Error: primero busque un carrito");
+            return;
+        }
+        
+        if(this.productoEncontrado == null){
+            JOptionPane.showMessageDialog(null, "Error: No se encontro el producto");
+            return;
+        }
+        
+        if(existeProductoEnModificados(txtCodigoProductoAgregar.getText())){
+            JOptionPane.showMessageDialog(null, "Error: el producto ya existe en el carrito, eliminelo primero");
+            limpiarDatosProductoAgregar();
+            return;
+        }
+
+        if(cantidadString.isBlank()){
+            JOptionPane.showMessageDialog(null, "Error: Campo de cantidad vacio");
+            return;
+        }
+
+        int cantidad;
+        
+        try{
+            cantidad = Integer.parseInt(cantidadString);
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Error: Ingrese un valor numerico en cantidad");
+            return;
+        }
+
+        ItemCarrito item = new ItemCarrito(productoEncontrado, cantidad);
+        itemsModificados.add(item);
+
+        mostrarProductos();
+
+        limpiarDatosProductoAgregar();
+
+        this.productoEncontrado=null;
+        TablaDatosCarrito.setDefaultEditor(Object.class, null);
+        
+    }//GEN-LAST:event_btAgregarProductoACarritoActionPerformed
+
+    private void btBuscarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCarritoActionPerformed
+        String codigo = txtCodigoCarritoBuscar.getText();
+        Carrito c = carritoControlador.retornarCarritoPorCodigo(codigo);
+        this.carritoEncontrado = c;
+        if(c != null){
+            this.itemsModificados = new ArrayList<>(c.getItems());
+            this.codigoDeCarritoEncontrado = c.getCodigo();
+            mostrarProductos();
+        }
+        TablaDatosCarrito.setDefaultEditor(Object.class, null);
+    }//GEN-LAST:event_btBuscarCarritoActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
+        String codigoPermiso = txtCodigoDePermiso.getText();
+        if(!codigoPermiso.equals("123")){
+            JOptionPane.showMessageDialog(null, "Error: Codigo de permiso denegado");
+            return;
+        }
+        
+        String codigoProductoAEliminar = txtCodigoAEliminar.getText();
+        
+        for(int i = 0; i<itemsModificados.size(); i++){
+            if(itemsModificados.get(i).getProducto().getCodigo().equals(codigoProductoAEliminar)){
+                itemsModificados.remove(i);
+                txtCodigoAEliminar.setText("");
+                mostrarProductos();
+                return;
+            }
+        }
+        
+        JOptionPane.showMessageDialog(null,"Error: codigo de producto no encontrado");
+        txtCodigoAEliminar.setText("");
+        return;
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        carritoControlador.actualizarCarrito(itemsModificados, codigoDeCarritoEncontrado);
+        DefaultTableModel modelo =  (DefaultTableModel) TablaDatosCarrito.getModel();
+        modelo.setRowCount(0);
+        limpiarDatosProductoAgregar();
+        txtCodigoAEliminar.setText("");
+        txtCodigoDePermiso.setText("");
+        txtCantidadProductoAgregar.setText("");
+        txtCodigoCarritoBuscar.setText("");
+        
+        JOptionPane.showMessageDialog(null, "Carrito Modificado con Exito");
+        
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaDatosCarrito;
+    private javax.swing.JButton btAgregarProductoACarrito;
     private javax.swing.JButton btBuscarCarrito;
+    private javax.swing.JButton btBuscarProductoAAgregar;
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTextField txtCantidadProductoAgregar;
+    private javax.swing.JTextField txtCodigoAEliminar;
+    private javax.swing.JTextField txtCodigoCarritoBuscar;
+    private javax.swing.JTextField txtCodigoDePermiso;
+    private javax.swing.JTextField txtCodigoProductoAgregar;
     private javax.swing.JTextField txtCodigoProductoBuscar;
+    private javax.swing.JTextField txtNombreProductoAgregar;
+    private javax.swing.JTextField txtPrecioProductoAgregar;
     // End of variables declaration//GEN-END:variables
 }

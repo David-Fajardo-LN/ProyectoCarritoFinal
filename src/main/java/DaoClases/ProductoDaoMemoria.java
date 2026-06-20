@@ -4,7 +4,7 @@
  */
 package DaoClases;
 
-import DaoInterfazes.ProductoDao;
+import DaoInterfaces.ProductoDao;
 import Logica.Producto;
 import Logica.ProductoBaseDatos;
 import java.util.ArrayList;
@@ -29,6 +29,10 @@ public class ProductoDaoMemoria implements ProductoDao{
     @Override
     public void eliminarProductoPorCodigo(String codigo) {
         productos.eliminarProductoDeLaBase(codigo);
+    }
+    
+    public void eliminarProductoPorObjeto(Producto p){
+        productos.eliminarProductoPorObjetoBase(p);
     }
 
     @Override

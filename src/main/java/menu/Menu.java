@@ -4,8 +4,11 @@
 
 package menu;
 
+import Controladores.CarritoControlador;
 import Controladores.ProductoControlador;
+import DaoClases.CarritoDaoMemoria;
 import DaoClases.ProductoDaoMemoria;
+import Logica.CarritoBaseDatos;
 import Logica.ProductoBaseDatos;
 import Ventanas.VPrincipalView;
 
@@ -39,10 +42,16 @@ public class Menu {
     */
         
         ProductoBaseDatos baseDatosProducto = new ProductoBaseDatos();
-        ProductoDaoMemoria productoDaoMemoria = new ProductoDaoMemoria(baseDatosProducto);
-        ProductoControlador controladorProducto = new ProductoControlador(productoDaoMemoria);
+        CarritoBaseDatos baseDatosCarrito = new CarritoBaseDatos(baseDatosProducto);
         
-        VPrincipalView principalView = new VPrincipalView(controladorProducto);
+        
+        ProductoDaoMemoria productoDaoMemoria = new ProductoDaoMemoria(baseDatosProducto);
+        CarritoDaoMemoria carritoDaoMemoria = new  CarritoDaoMemoria(baseDatosCarrito);
+        
+        ProductoControlador controladorProducto = new ProductoControlador(productoDaoMemoria);
+        CarritoControlador controladorCarrito = new CarritoControlador(carritoDaoMemoria);
+        
+        VPrincipalView principalView = new VPrincipalView(controladorProducto,controladorCarrito);
         principalView.setLocationRelativeTo(null);
         principalView.setVisible(true);
         

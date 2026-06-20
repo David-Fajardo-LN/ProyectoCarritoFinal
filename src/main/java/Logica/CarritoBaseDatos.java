@@ -13,15 +13,15 @@ import java.util.ArrayList;
 public class CarritoBaseDatos {
     
     private ProductoBaseDatos productos;
-    
     private ArrayList<Carrito> carritos;
 
+    public CarritoBaseDatos(ProductoBaseDatos productos) {
+        this.productos = productos;
+        this.carritos = generarCarritosIniciales();
+    }
+    
     public ArrayList<Carrito> getCarritos() {
         return carritos;
-    }
-
-    public CarritoBaseDatos() {
-        this.carritos = generarCarritosIniciales();
     }
     
     public void agregarCarrito(Carrito c){
@@ -45,6 +45,10 @@ public class CarritoBaseDatos {
         }
     }
     
+    public void eliminarCarritoPorObjeto(Carrito c){
+        carritos.remove(c);
+    }
+    
     public boolean buscarCarritoPorCodigo(String codigoBuscar){
         for(Carrito c : carritos){
             if(c.getCodigo().equals(codigoBuscar))
@@ -55,9 +59,7 @@ public class CarritoBaseDatos {
     
     public int size() {
         return this.carritos.size();
-    }
-    
-    
+    } 
     
     private ArrayList<Carrito> generarCarritosIniciales(){
 
