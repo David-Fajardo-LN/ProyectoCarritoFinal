@@ -4,17 +4,11 @@
  */
 package Ventanas;
 
-import Controladores.CarritoControlador;
-import Controladores.ProductoControlador;
-import Ventanas.VentanasCarrito.VBuscarCarritoView;
-import Ventanas.VentanasCarrito.VEliminarCarritoView;
-import Ventanas.VentanasCarrito.VModificarCarritoView;
-import Ventanas.VentanasCarrito.VNuevoCarritoView;
-import Ventanas.VentanasProducto.VAgregarProductoView;
-import Ventanas.VentanasProducto.VBuscarProductoView;
-import Ventanas.VentanasProducto.VEliminarProductoView;
-import Ventanas.VentanasProducto.VListarProductosView;
-import Ventanas.VentanasProducto.VModificarProductoView;
+import Controladores.ControladorProducto;
+import Servicios.CarritoServicio;
+import Servicios.ProductoServicio;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 
 /**
@@ -22,18 +16,36 @@ import Ventanas.VentanasProducto.VModificarProductoView;
  * @author User
  */
 public class VPrincipalView extends javax.swing.JFrame {
-
-    private ProductoControlador controladorProducto;
-    private CarritoControlador controladorCarrito;
     /**
      * Creates new form PrincipalView
      */
-    public VPrincipalView(ProductoControlador controlador, CarritoControlador controladorCarrito) {
-        this.controladorProducto = controlador;
-        this.controladorCarrito= controladorCarrito;
+    public VPrincipalView() {
         initComponents();
-        
     }
+
+    public JMenuItem getOpcionBuscarProducto() {
+        return opcionBuscarProducto;
+    }
+
+    public JMenuItem getOpcionCrearProducto() {
+        return opcionCrearCarritoOpcion;
+    }
+
+    public JMenuItem getOpcionEliminarProducto() {
+        return OpcionEliminarProducto;
+    }
+
+    public JMenuItem getOpcionModificarProducto() {
+        return opcionModificarProducto;
+    }
+
+    public JMenuItem getOpcionListarProductos() {
+        return opcionListarProductos;
+    }
+    
+    
+    
+    
    
     
     /**
@@ -53,17 +65,16 @@ public class VPrincipalView extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         opcionCrearProducto = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
+        opcionCrearCarritoOpcion = new javax.swing.JMenuItem();
         opcionBuscarProducto = new javax.swing.JMenuItem();
         opcionModificarProducto = new javax.swing.JMenuItem();
-        opcionEliminarProducto = new javax.swing.JMenuItem();
-        listarProductos = new javax.swing.JMenuItem();
+        OpcionEliminarProducto = new javax.swing.JMenuItem();
+        opcionListarProductos = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         opcionNuevoCarrito = new javax.swing.JMenuItem();
         OopcionBuscarCarrito = new javax.swing.JMenuItem();
@@ -109,18 +120,14 @@ public class VPrincipalView extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(255, 153, 0));
 
-        jTextField2.setEditable(false);
-        jTextField2.setText("123");
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setText("CODIGO DE PERMISO PARA MODIFICAR, Y ELIMINAR ELEMENTOS :");
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("EL SISTEMA YA TIENE UNA BASE INICIAL, NO HACE FALTA AGREGAR ELEMETNOS");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("PARA PROBAR TODAS LAS FUNCIONALIDADES");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setText("LAS VENTANAS DE CARRITO NO TIENEN FUNCIONALIDAD, SOLO PRODUCTOS");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -130,9 +137,7 @@ public class VPrincipalView extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel4))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,15 +148,13 @@ public class VPrincipalView extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel4)
+                .addGap(45, 45, 45)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -201,10 +204,10 @@ public class VPrincipalView extends javax.swing.JFrame {
         opcionCrearProducto.setMnemonic('f');
         opcionCrearProducto.setText("Producto");
 
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Crear Producto");
-        openMenuItem.addActionListener(this::openMenuItemActionPerformed);
-        opcionCrearProducto.add(openMenuItem);
+        opcionCrearCarritoOpcion.setMnemonic('o');
+        opcionCrearCarritoOpcion.setText("Crear Producto");
+        opcionCrearCarritoOpcion.addActionListener(this::opcionCrearCarritoOpcionActionPerformed);
+        opcionCrearProducto.add(opcionCrearCarritoOpcion);
 
         opcionBuscarProducto.setMnemonic('s');
         opcionBuscarProducto.setText("Buscar Producto");
@@ -216,14 +219,14 @@ public class VPrincipalView extends javax.swing.JFrame {
         opcionModificarProducto.addActionListener(this::opcionModificarProductoActionPerformed);
         opcionCrearProducto.add(opcionModificarProducto);
 
-        opcionEliminarProducto.setMnemonic('x');
-        opcionEliminarProducto.setText("Eliminar Producto");
-        opcionEliminarProducto.addActionListener(this::opcionEliminarProductoActionPerformed);
-        opcionCrearProducto.add(opcionEliminarProducto);
+        OpcionEliminarProducto.setMnemonic('x');
+        OpcionEliminarProducto.setText("Eliminar Producto");
+        OpcionEliminarProducto.addActionListener(this::OpcionEliminarProductoActionPerformed);
+        opcionCrearProducto.add(OpcionEliminarProducto);
 
-        listarProductos.setText("Listar Productos");
-        listarProductos.addActionListener(this::listarProductosActionPerformed);
-        opcionCrearProducto.add(listarProductos);
+        opcionListarProductos.setText("Listar Productos");
+        opcionListarProductos.addActionListener(this::opcionListarProductosActionPerformed);
+        opcionCrearProducto.add(opcionListarProductos);
 
         menuBar.add(opcionCrearProducto);
 
@@ -281,91 +284,40 @@ public class VPrincipalView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void opcionEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEliminarProductoActionPerformed
-        VEliminarProductoView eliminarProducto = new VEliminarProductoView(controladorProducto);
-        eliminarProducto.setVentanaPrincipal(this);
-        eliminarProducto.setVisible(true);
-        eliminarProducto.setLocationRelativeTo(null);
-        
-        this.setVisible(false);
-    }//GEN-LAST:event_opcionEliminarProductoActionPerformed
+    private void OpcionEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpcionEliminarProductoActionPerformed
 
-    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-        VAgregarProductoView agregarProducto = new VAgregarProductoView(controladorProducto);
-        agregarProducto.setVentanaPrincipal(this);
-        agregarProducto.setVisible(true);
-        agregarProducto.setLocationRelativeTo(null);
-        
-        this.setVisible(false);
-    }//GEN-LAST:event_openMenuItemActionPerformed
+    }//GEN-LAST:event_OpcionEliminarProductoActionPerformed
+
+    private void opcionCrearCarritoOpcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCrearCarritoOpcionActionPerformed
+
+    }//GEN-LAST:event_opcionCrearCarritoOpcionActionPerformed
 
     private void opcionBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionBuscarProductoActionPerformed
-        VBuscarProductoView buscarProducto = new VBuscarProductoView(controladorProducto);
-        buscarProducto.setVentanaPrincipal(this);
-        buscarProducto.setVisible(true);
-        buscarProducto.setLocationRelativeTo(null);
-        
-        this.setVisible(false);
+
     }//GEN-LAST:event_opcionBuscarProductoActionPerformed
 
     private void opcionModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModificarProductoActionPerformed
-        VModificarProductoView agregarProducto = new VModificarProductoView(controladorProducto);
-        agregarProducto.setVentanaPrincipal(this);
-        agregarProducto.setVisible(true);
-        agregarProducto.setLocationRelativeTo(null);
-        
-        this.setVisible(false);
+
     }//GEN-LAST:event_opcionModificarProductoActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    private void opcionListarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionListarProductosActionPerformed
 
-    private void listarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarProductosActionPerformed
-        
-        VListarProductosView listarProductos = new VListarProductosView(controladorProducto);
-        listarProductos.setVentanaPrincipal(this);
-        listarProductos.setVisible(true);
-        listarProductos.setLocationRelativeTo(null);
-        
-        this.setVisible(false);
-        
-    }//GEN-LAST:event_listarProductosActionPerformed
+    }//GEN-LAST:event_opcionListarProductosActionPerformed
 
     private void opcionNuevoCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionNuevoCarritoActionPerformed
-        VNuevoCarritoView nuevoCarrito = new VNuevoCarritoView(controladorCarrito,controladorProducto);
-        nuevoCarrito.setVentanaPrincipal(this);
-        nuevoCarrito.setVisible(true);
-        nuevoCarrito.setLocationRelativeTo(null);
-        
-        this.setVisible(false);
+
     }//GEN-LAST:event_opcionNuevoCarritoActionPerformed
 
     private void OopcionBuscarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OopcionBuscarCarritoActionPerformed
-        VBuscarCarritoView buscarCarrito = new VBuscarCarritoView(controladorCarrito);
-        buscarCarrito.setVentanaPrincipal(this);
-        buscarCarrito.setVisible(true);
-        buscarCarrito.setLocationRelativeTo(null);
-        
-        this.setVisible(false);
+
     }//GEN-LAST:event_OopcionBuscarCarritoActionPerformed
 
     private void opcionModificarInformacionCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModificarInformacionCarritoActionPerformed
-        VModificarCarritoView modificarCarrito = new VModificarCarritoView(controladorCarrito,controladorProducto);
-        modificarCarrito.setVentanaPrincipal(this);
-        modificarCarrito.setVisible(true);
-        modificarCarrito.setLocationRelativeTo(null);
-        
-        this.setVisible(false);
+
     }//GEN-LAST:event_opcionModificarInformacionCarritoActionPerformed
 
     private void opcionEliminarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionEliminarCarritoActionPerformed
-        VEliminarCarritoView eliminarCarrito = new VEliminarCarritoView(controladorCarrito);
-        eliminarCarrito.setVentanaPrincipal(this);
-        eliminarCarrito.setVisible(true);
-        eliminarCarrito.setLocationRelativeTo(null);
-        
-        this.setVisible(false);
+
     }//GEN-LAST:event_opcionEliminarCarritoActionPerformed
 
     /**
@@ -376,6 +328,7 @@ public class VPrincipalView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem OopcionBuscarCarrito;
+    private javax.swing.JMenuItem OpcionEliminarProducto;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JDesktopPane desktopPane;
@@ -384,24 +337,22 @@ public class VPrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JMenuItem listarProductos;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem opcionBuscarProducto;
+    private javax.swing.JMenuItem opcionCrearCarritoOpcion;
     private javax.swing.JMenu opcionCrearProducto;
     private javax.swing.JMenuItem opcionEliminarCarrito;
-    private javax.swing.JMenuItem opcionEliminarProducto;
+    private javax.swing.JMenuItem opcionListarProductos;
     private javax.swing.JMenuItem opcionModificarInformacionCarrito;
     private javax.swing.JMenuItem opcionModificarProducto;
     private javax.swing.JMenuItem opcionNuevoCarrito;
-    private javax.swing.JMenuItem openMenuItem;
     // End of variables declaration//GEN-END:variables
 
 }
